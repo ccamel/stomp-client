@@ -1,6 +1,6 @@
 stomp-client
 ============
-[![MIT](https://img.shields.io/badge/licence-MIT-lightgrey.svg?style=flat)](https://tldrlegal.com/license/mit-license)
+[![MIT](https://img.shields.io/badge/licence-MIT-lightgrey.svg?style=flat)](https://tldrlegal.com/license/mit-license) [![Build Status](https://travis-ci.org/ccamel/stomp-client.svg?branch=master)](https://travis-ci.org/ccamel/stomp-client)
 
 > [Scala] implementation of a [STOMP] 1.2 client library for both the backend and frontend.
 
