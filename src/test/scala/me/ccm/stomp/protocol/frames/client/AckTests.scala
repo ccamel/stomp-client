@@ -25,21 +25,24 @@
 package me.ccm.stomp.protocol.frames.client
 
 import org.scalatest._
+import org.scalatest.prop.TableDrivenPropertyChecks
 
 import scala.Array.emptyByteArray
 
 /**
   *
   */
-class AckTest extends FlatSpec with Matchers {
-  "The ACK frame" must "be named ack" in {
+class AckTest extends FlatSpec with Matchers with GivenWhenThen with TableDrivenPropertyChecks {
+  behavior of "The ACK frame"
+
+  it must "be named ack" in {
     val f = Ack("123")
 
     Ack.frameName should be("ACK")
     f.frameName should be("ACK")
   }
 
-  "The ACK frame" must "include an id header" in {
+  it must "include an id header" in {
     val id = "123"
     val f = Ack(id)
 
@@ -49,19 +52,23 @@ class AckTest extends FlatSpec with Matchers {
     f.additionalHeaders should not contain key(Ack.ID)
   }
 
-  "The ACK frame" must "include an optional transaction header" in {
-    { // no transaction
+  it must "include an optional transaction header" in {
+    {
+      Given("an ACK frame without transaction")
       val id = "123"
       val f = Ack(id)
 
+      Then("there must be no transaction at all")
       f.headers should not contain key(Ack.TRANSACTION)
       f.transaction should be(None)
       f.additionalHeaders should not contain key(Ack.TRANSACTION)
     }
-    { // with transaction
+    {
+      Given("an ACK frame with transaction")
       val transaction = "tr1"
       val f = Ack("foo", Some(transaction))
 
+      Then("there must be a transaction")
       Ack.TRANSACTION should be("transaction")
       f.transaction should equal(Some(transaction))
       f.headers should contain(Ack.TRANSACTION -> transaction)
@@ -69,16 +76,31 @@ class AckTest extends FlatSpec with Matchers {
     }
   }
 
-  "The ACK frame" must "not have a body" in {
+  it must "not have a body" in {
     val f = Ack("123")
 
+    Ack.hasBody should be(false)
     f.body should be(emptyByteArray)
     f.hasBodyContent should be(false)
   }
 
-  "The ACK frame" must "be correctly constructed from headers" in {
-    Ack(Map("id" -> "123")) should equal(Ack("123"))
-    Ack(Map("id" -> "123", "transaction" -> "tr1")) should equal(Ack("123", Some("tr1")))
-    Ack(Map("id" -> "123", "a" -> "1", "b" -> "2")) should equal(Ack("123", None, Map("a" -> "1", "b" -> "2")))
+  it must "be correctly constructed from a map" in {
+    val data =
+      Table(
+        ("map", "result"),
+        (Map("id" -> "123"), Ack("123")),
+        (Map("id" -> "123", "transaction" -> "tr1"), Ack("123", Some("tr1"))),
+        (Map("id" -> "123", "a" -> "1", "b" -> "2"), Ack("123", None, Map("a" -> "1", "b" -> "2")))
+      )
+
+    forAll(data) { (m: Map[String, String], result: Ack) =>
+      Given(s"the map $m")
+      Then(s"Ack is $result")
+      Ack(m) should equal(result)
+    }
+
+    a[NoSuchElementException] should be thrownBy {
+      Ack(Map("foo" -> "bar"))
+    }
   }
 }
