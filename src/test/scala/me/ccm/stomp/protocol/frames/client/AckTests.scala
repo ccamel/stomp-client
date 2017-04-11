@@ -24,21 +24,61 @@
 
 package me.ccm.stomp.protocol.frames.client
 
-import org.scalatest.FlatSpec
+import org.scalatest._
 
 import scala.Array.emptyByteArray
 
 /**
   *
   */
-class AckTest  extends FlatSpec {
-  // FIXME: I would like this spec to reflect the STOMP Protocol Specification
-  "An ack frame" should "be well constructed" in {
-    val ack = Ack( "123" )
+class AckTest extends FlatSpec with Matchers {
+  "The ACK frame" must "be named ack" in {
+    val f = Ack("123")
 
-    assert( ack.frameName === "ACK" )
-    assert( ack.body === emptyByteArray )
-    println(ack.headers )
-    assert( ack.headers === Map("id" -> "123") )
+    Ack.frameName should be("ACK")
+    f.frameName should be("ACK")
+  }
+
+  "The ACK frame" must "include an id header" in {
+    val id = "123"
+    val f = Ack(id)
+
+    Ack.ID should be("id")
+    f.id should equal(id)
+    f.headers should contain(Ack.ID -> id)
+    f.additionalHeaders should not contain key(Ack.ID)
+  }
+
+  "The ACK frame" must "include an optional transaction header" in {
+    { // no transaction
+      val id = "123"
+      val f = Ack(id)
+
+      f.headers should not contain key(Ack.TRANSACTION)
+      f.transaction should be(None)
+      f.additionalHeaders should not contain key(Ack.TRANSACTION)
+    }
+    { // with transaction
+      val transaction = "tr1"
+      val f = Ack("foo", Some(transaction))
+
+      Ack.TRANSACTION should be("transaction")
+      f.transaction should equal(Some(transaction))
+      f.headers should contain(Ack.TRANSACTION -> transaction)
+      f.additionalHeaders should not contain key(Ack.TRANSACTION)
+    }
+  }
+
+  "The ACK frame" must "not have a body" in {
+    val f = Ack("123")
+
+    f.body should be(emptyByteArray)
+    f.hasBodyContent should be(false)
+  }
+
+  "The ACK frame" must "be correctly constructed from headers" in {
+    Ack(Map("id" -> "123")) should equal(Ack("123"))
+    Ack(Map("id" -> "123", "transaction" -> "tr1")) should equal(Ack("123", Some("tr1")))
+    Ack(Map("id" -> "123", "a" -> "1", "b" -> "2")) should equal(Ack("123", None, Map("a" -> "1", "b" -> "2")))
   }
 }
