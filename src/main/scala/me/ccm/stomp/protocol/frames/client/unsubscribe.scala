@@ -48,7 +48,7 @@ object Unsubscribe extends ClientFrameProps with UnsubscribeHeaderKeys {
 
   def apply(headers: Map[String, String]): Unsubscribe = {
     val id = headers(ID)
-    val additionalHeaders = headers - (ID)
+    val additionalHeaders = headers - ID
 
     Unsubscribe(id, additionalHeaders)
   }

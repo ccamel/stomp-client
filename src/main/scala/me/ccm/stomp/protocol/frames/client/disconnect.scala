@@ -47,7 +47,7 @@ object Disconnect extends ClientFrameProps with DisconnectHeaderKeys {
 
   def apply(headers: Map[String, String]): Disconnect = {
     val receipt = headers(RECEIPT)
-    val additionalHeaders = headers - (RECEIPT)
+    val additionalHeaders = headers - RECEIPT
 
     Disconnect(receipt, additionalHeaders)
   }

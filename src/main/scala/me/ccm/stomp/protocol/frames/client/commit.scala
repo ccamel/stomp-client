@@ -49,7 +49,7 @@ object Commit extends ClientFrameProps with CommitHeaderKeys {
 
   def apply(headers: Map[String, String]): Commit = {
     val transaction = headers(TRANSACTION)
-    val additionalHeaders = headers - (TRANSACTION)
+    val additionalHeaders = headers - TRANSACTION
 
     Commit(transaction, additionalHeaders)
   }

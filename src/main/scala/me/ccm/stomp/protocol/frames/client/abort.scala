@@ -49,7 +49,7 @@ object Abort extends ClientFrameProps with AbortHeaderKeys {
 
   def apply(headers: Map[String, String]): Abort = {
     val transaction = headers(TRANSACTION)
-    val additionalHeaders = headers - (TRANSACTION)
+    val additionalHeaders = headers - TRANSACTION
 
     Abort(transaction, additionalHeaders)
   }

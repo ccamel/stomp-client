@@ -49,7 +49,7 @@ object Receipt extends ServerFrameProps with ReceiptHeaderKeys {
   def apply(headers: Map[String, String]): Receipt = {
     val receiptId = headers(RECEIPT_ID)
 
-    val additionalHeaders = headers - (RECEIPT_ID)
+    val additionalHeaders = headers - RECEIPT_ID
 
     Receipt(receiptId, additionalHeaders)
   }
