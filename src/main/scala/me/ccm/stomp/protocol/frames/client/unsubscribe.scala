@@ -23,12 +23,7 @@
  */
 package me.ccm.stomp.protocol.frames.client
 
-import me.ccm.stomp.protocol.frames.CommonHeaderKeys
-
-trait UnsubscribeHeaderKeys extends ClientHeaderKeys with CommonHeaderKeys {
-  /** The Constant ID. */
-  val ID: String = "id"
-}
+import me.ccm.stomp.protocol.frames.{IdHeader, StandardStompHeader}
 
 case class Unsubscribe(id: String,
                        additionalHeaders: Map[String, String] = Map.empty) extends ClientStompFrame {
@@ -42,7 +37,7 @@ case class Unsubscribe(id: String,
   override val body: Array[Byte] = Array.emptyByteArray
 }
 
-object Unsubscribe extends ClientFrameProps with UnsubscribeHeaderKeys {
+object Unsubscribe extends ClientFrameProps with StandardStompHeader with IdHeader {
   override val frameName: String = "UNSUBSCRIBE"
   override val hasBody: Boolean = false
 

@@ -23,15 +23,7 @@
  */
 package me.ccm.stomp.protocol.frames.client
 
-import me.ccm.stomp.protocol.frames.CommonWithBodyHeaderKeys
-
-trait SendHeaderKeys extends ClientHeaderKeys with CommonWithBodyHeaderKeys {
-  /** The Constant TRANSACTION. */
-  val TRANSACTION: String = "transaction"
-
-  /** The Constant DESTINATION. */
-  val DESTINATION: String = "destination"
-}
+import me.ccm.stomp.protocol.frames.{DestinationHeader, StandardStompHeader, TransactionHeader}
 
 case class Send(destination: String,
                 transaction: Option[String] = None,
@@ -52,7 +44,7 @@ case class Send(destination: String,
 
 }
 
-object Send extends ClientFrameProps with SendHeaderKeys {
+object Send extends ClientFrameProps with StandardStompHeader with TransactionHeader with DestinationHeader {
   override val frameName: String = "SEND"
   override val hasBody: Boolean = true
 

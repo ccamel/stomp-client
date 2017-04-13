@@ -23,25 +23,7 @@
  */
 package me.ccm.stomp.protocol.frames.client
 
-import me.ccm.stomp.protocol.frames.CommonHeaderKeys
-
-
-trait ConnectHeaderKeys extends ClientHeaderKeys with CommonHeaderKeys {
-  /** The Constant HEART_BEAT. */
-  def HEART_BEAT: String = "heart-beat"
-
-  /** The Constant PASSCODE. */
-  def PASSCODE: String = "passcode"
-
-  /** The Constant LOGIN. */
-  def LOGIN: String = "login"
-
-  /** The Constant HOST. */
-  def HOST: String = "host"
-
-  /** The Constant ACCEPT_VERSION. */
-  def ACCEPT_VERSION: String = "accept-version"
-}
+import me.ccm.stomp.protocol.frames._
 
 case class Connect(acceptVersion: String,
                    host: String,
@@ -63,7 +45,14 @@ case class Connect(acceptVersion: String,
   override def body: Array[Byte] = Array.emptyByteArray
 }
 
-object Connect extends ClientFrameProps with ConnectHeaderKeys {
+object Connect extends ClientFrameProps
+  with ContentTypeHeader
+  with ContentLengthHeader
+  with HeartBeatHeader
+  with PasscodeHeader
+  with LoginHeader
+  with HostHeader
+  with AcceptVersionHeader {
   override val frameName: String = "CONNECT"
   override val hasBody: Boolean = false
 

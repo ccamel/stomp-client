@@ -24,22 +24,15 @@
 package me.ccm.stomp.protocol.frames.client
 
 import me.ccm.stomp.protocol.frames.server.Receipt
-import me.ccm.stomp.protocol.frames.{HeaderKeys, StompFrame, StompFrameProps}
-
-
-trait ClientHeaderKeys extends HeaderKeys {
-  def RECEIPT: String = "receipt"
-}
+import me.ccm.stomp.protocol.frames.{Headers, StompFrame, StompFrameProps}
 
 trait ClientStompFrame extends StompFrame {
   /**
     * @return the receipt stomp frame related to this given client frame, only if it contains a receipt id.
     */
   def receiptFrame(): Option[Receipt] =
-    headers.get(ClientStompFrame.RECEIPT).map(id ⇒ Receipt(id))
+    headers.get(Headers.RECEIPT).map(id ⇒ Receipt(id))
 }
-
-object ClientStompFrame extends ClientHeaderKeys
 
 trait ClientFrameProps extends StompFrameProps {
   override def isClientFrame: Boolean = true

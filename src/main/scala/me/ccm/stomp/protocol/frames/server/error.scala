@@ -23,14 +23,8 @@
  */
 package me.ccm.stomp.protocol.frames.server
 
-import me.ccm.stomp.protocol.frames.CommonWithBodyHeaderKeys
-
-trait ErrorHeaderKeys extends ServerHeaderKeys with CommonWithBodyHeaderKeys {
-  /** The Constant MESSAGE. */
-  val MESSAGE: String = "message"
-  /** The Constant RECEIPT_ID. */
-  val RECEIPT_ID: String = "receipt-id"
-}
+import com.sun.xml.internal.bind.api.impl.NameConverter.Standard
+import me.ccm.stomp.protocol.frames.{MessageHeader, ReceiptIdHeader, StandardStompHeader}
 
 case class Error(receiptId: Option[String] = None,
                  contentType: Option[String] = None,
@@ -48,7 +42,10 @@ case class Error(receiptId: Option[String] = None,
       message.map(Error.MESSAGE -> _)
 }
 
-object Error extends ServerFrameProps with ErrorHeaderKeys {
+object Error extends ServerFrameProps
+  with StandardStompHeader
+  with MessageHeader
+  with ReceiptIdHeader {
   override val frameName: String = "ERROR"
   override val hasBody: Boolean = true
 

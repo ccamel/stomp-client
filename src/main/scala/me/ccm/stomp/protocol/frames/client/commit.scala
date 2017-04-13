@@ -23,12 +23,7 @@
  */
 package me.ccm.stomp.protocol.frames.client
 
-import me.ccm.stomp.protocol.frames.{CommonHeaderKeys, StompFrame}
-
-trait CommitHeaderKeys extends ClientHeaderKeys with CommonHeaderKeys {
-  /** The Constant TRANSACTION. */
-  val TRANSACTION: String = "transaction"
-}
+import me.ccm.stomp.protocol.frames.{StandardStompHeader, StompFrame, TransactionHeader}
 
 case class Commit(transaction: String,
                additionalHeaders: Map[String, String] = Map.empty) extends StompFrame {
@@ -42,7 +37,7 @@ case class Commit(transaction: String,
   override def body: Array[Byte] = Array.emptyByteArray
 }
 
-object Commit extends ClientFrameProps with CommitHeaderKeys {
+object Commit extends ClientFrameProps with StandardStompHeader with TransactionHeader {
   val frameName: String = "COMMIT"
 
   override def hasBody: Boolean = false

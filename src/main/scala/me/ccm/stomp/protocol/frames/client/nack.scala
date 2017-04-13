@@ -23,14 +23,7 @@
  */
 package me.ccm.stomp.protocol.frames.client
 
-import me.ccm.stomp.protocol.frames.CommonHeaderKeys
-
-trait NackHeaderKeys extends ClientHeaderKeys with CommonHeaderKeys {
-  /** The Constant TRANSACTION. */
-  val TRANSACTION: String = "transaction"
-  /** The Constant ID. */
-  val ID: String = "id"
-}
+import me.ccm.stomp.protocol.frames.{IdHeader, StandardStompHeader, TransactionHeader}
 
 case class Nack(id: String,
                 transaction: Option[String] = None,
@@ -46,7 +39,7 @@ case class Nack(id: String,
   override def body: Array[Byte] = Array.emptyByteArray
 }
 
-object Nack extends ClientFrameProps with NackHeaderKeys {
+object Nack extends ClientFrameProps with StandardStompHeader with TransactionHeader with IdHeader {
   override val frameName: String = "NACK"
   override val hasBody: Boolean = false
 

@@ -23,18 +23,7 @@
  */
 package me.ccm.stomp.protocol.frames.server
 
-import me.ccm.stomp.protocol.frames.CommonHeaderKeys
-
-trait ConnectedHeaderKeys extends ServerHeaderKeys with CommonHeaderKeys {
-  /** The Constant SESSION. */
-  val SESSION: String = "session"
-  /** The Constant SERVER. */
-  val SERVER: String = "server"
-  /** The Constant HEART_BEAT. */
-  val HEART_BEAT: String = "heart-beat"
-  /** The Constant VERSION. */
-  val VERSION: String = "version"
-}
+import me.ccm.stomp.protocol.frames._
 
 case class Connected(version: String,
                      session: Option[String] = None,
@@ -54,7 +43,11 @@ case class Connected(version: String,
   override val body: Array[Byte] = Array.emptyByteArray
 }
 
-object Connected extends ServerFrameProps with ConnectedHeaderKeys {
+object Connected extends ServerFrameProps
+  with SessionHeader
+  with ServerHeader
+  with HeartBeatHeader
+  with VersionHeader {
   override val frameName: String = "CONNECTED"
   override val hasBody: Boolean = false
 

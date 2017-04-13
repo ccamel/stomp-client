@@ -23,12 +23,7 @@
  */
 package me.ccm.stomp.protocol.frames.server
 
-import me.ccm.stomp.protocol.frames.{HeaderKeys, StompFrame, StompFrameProps}
-
-
-trait ServerHeaderKeys extends HeaderKeys {
-
-}
+import me.ccm.stomp.protocol.frames.{StompFrame, StompFrameProps}
 
 trait ServerStompFrame extends StompFrame {
 

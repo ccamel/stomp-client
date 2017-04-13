@@ -23,19 +23,8 @@
  */
 package me.ccm.stomp.protocol.frames.server
 
-import me.ccm.stomp.protocol.frames.CommonWithBodyHeaderKeys
+import me.ccm.stomp.protocol.frames._
 import me.ccm.stomp.protocol.frames.server.Error._
-
-trait MessageHeaderKeys extends ServerHeaderKeys with CommonWithBodyHeaderKeys {
-  /** The Constant ACK. */
-  val ACK: String = "ack"
-  /** The Constant SUBSCRIPTION. */
-  val SUBSCRIPTION: String = "subscription"
-  /** The Constant MESSAGE_ID. */
-  val MESSAGE_ID: String = "message-id"
-  /** The Constant DESTINATION. */
-  val DESTINATION: String = "destination"
-}
 
 case class Message(destination: String,
                    messageId: String,
@@ -57,7 +46,12 @@ case class Message(destination: String,
       contentType.map(Message.CONTENT_TYPE -> _)
 }
 
-object Message extends ServerFrameProps with MessageHeaderKeys {
+object Message extends ServerFrameProps
+  with StandardStompHeader
+  with AckHeader
+  with SubscriptionHeader
+  with MessageIdHeader
+  with DestinationHeader {
   override val frameName: String = "MESSAGE"
   override val hasBody: Boolean = false
 

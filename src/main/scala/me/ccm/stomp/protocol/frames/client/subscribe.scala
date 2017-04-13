@@ -23,18 +23,7 @@
  */
 package me.ccm.stomp.protocol.frames.client
 
-import me.ccm.stomp.protocol.frames.CommonHeaderKeys
-
-
-trait SubscribeHeaderKeys extends ClientHeaderKeys with CommonHeaderKeys {
-  /** The Constant ID. */
-  val ID: String = "id"
-  /** The Constant ACK. */
-  val ACK: String = "ack"
-  /** The Constant DESTINATION. */
-  val DESTINATION: String = "destination"
-}
-
+import me.ccm.stomp.protocol.frames._
 
 case class Subscribe(destination: String,
                      id: String,
@@ -52,7 +41,7 @@ case class Subscribe(destination: String,
   override def body: Array[Byte] = Array.emptyByteArray
 }
 
-object Subscribe extends ClientFrameProps with SubscribeHeaderKeys {
+object Subscribe extends ClientFrameProps with StandardStompHeader with IdHeader with AckHeader with DestinationHeader {
   override val frameName: String = "SUBSCRIBE"
   override val hasBody: Boolean = false
 

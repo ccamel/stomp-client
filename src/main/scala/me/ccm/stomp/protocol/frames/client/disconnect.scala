@@ -23,11 +23,7 @@
  */
 package me.ccm.stomp.protocol.frames.client
 
-import me.ccm.stomp.protocol.frames.CommonHeaderKeys
-
-trait DisconnectHeaderKeys extends ClientHeaderKeys with CommonHeaderKeys {
-
-}
+import me.ccm.stomp.protocol.frames.{StandardStompHeader}
 
 case class Disconnect(receipt: String,
                       additionalHeaders: Map[String, String] = Map.empty) extends ClientStompFrame {
@@ -41,7 +37,7 @@ case class Disconnect(receipt: String,
   override def body: Array[Byte] = Array.emptyByteArray
 }
 
-object Disconnect extends ClientFrameProps with DisconnectHeaderKeys {
+object Disconnect extends ClientFrameProps with StandardStompHeader {
   override val frameName: String = "DISCONNECT"
   override val hasBody: Boolean = false
 

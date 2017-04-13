@@ -23,12 +23,7 @@
  */
 package me.ccm.stomp.protocol.frames.server
 
-import me.ccm.stomp.protocol.frames.CommonHeaderKeys
-
-trait ReceiptHeaderKeys extends ServerHeaderKeys with CommonHeaderKeys {
-  /** The Constant RECEIPT_ID. */
-  val RECEIPT_ID: String = "receipt-id"
-}
+import me.ccm.stomp.protocol.frames.{ReceiptIdHeader}
 
 case class Receipt(receiptId: String,
                    additionalHeaders: Map[String, String] = Map.empty) extends ServerStompFrame {
@@ -42,7 +37,7 @@ case class Receipt(receiptId: String,
   override def body: Array[Byte] = Array.emptyByteArray
 }
 
-object Receipt extends ServerFrameProps with ReceiptHeaderKeys {
+object Receipt extends ServerFrameProps with ReceiptIdHeader {
   override val frameName: String = "RECEIPT"
   override val hasBody: Boolean = false
 

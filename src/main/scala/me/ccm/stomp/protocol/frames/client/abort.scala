@@ -23,12 +23,7 @@
  */
 package me.ccm.stomp.protocol.frames.client
 
-import me.ccm.stomp.protocol.frames.{CommonHeaderKeys, StompFrame}
-
-trait AbortHeaderKeys extends ClientHeaderKeys with CommonHeaderKeys {
-  /** The Constant TRANSACTION. */
-  val TRANSACTION: String = "transaction"
-}
+import me.ccm.stomp.protocol.frames.{StandardStompHeader, StompFrame, TransactionHeader}
 
 case class Abort(transaction: String,
                additionalHeaders: Map[String, String] = Map.empty) extends StompFrame {
@@ -42,7 +37,7 @@ case class Abort(transaction: String,
   override def body: Array[Byte] = Array.emptyByteArray
 }
 
-object Abort extends ClientFrameProps with AbortHeaderKeys {
+object Abort extends ClientFrameProps with StandardStompHeader with TransactionHeader {
   val frameName: String = "ABORT"
 
   override def hasBody: Boolean = false

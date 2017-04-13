@@ -23,12 +23,7 @@
  */
 package me.ccm.stomp.protocol.frames.client
 
-import me.ccm.stomp.protocol.frames.{CommonHeaderKeys, StompFrame}
-
-trait BeginHeaderKeys extends ClientHeaderKeys with CommonHeaderKeys {
-  /** The Constant TRANSACTION. */
-  val TRANSACTION: String = "transaction"
-}
+import me.ccm.stomp.protocol.frames.{StandardStompHeader, StompFrame, TransactionHeader}
 
 case class Begin(transaction: String,
                additionalHeaders: Map[String, String] = Map.empty) extends StompFrame {
@@ -42,7 +37,7 @@ case class Begin(transaction: String,
   override def body: Array[Byte] = Array.emptyByteArray
 }
 
-object Begin extends ClientFrameProps with BeginHeaderKeys {
+object Begin extends ClientFrameProps with StandardStompHeader with TransactionHeader {
   val frameName: String = "BEGIN"
 
   override def hasBody: Boolean = false
