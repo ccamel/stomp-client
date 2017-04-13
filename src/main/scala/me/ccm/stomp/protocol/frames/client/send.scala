@@ -41,11 +41,13 @@ case class Send(destination: String,
 
   override val frameName: String = Send.frameName
 
+  def contentLength = if (!body.isEmpty) Some(body.length.toString) else None
+
   override val headers: Map[String, String] =
     additionalHeaders ++
       Some(Send.DESTINATION -> destination) ++
       transaction.map(Send.TRANSACTION -> _) ++
-      (if (!body.isEmpty) Some(Send.CONTENT_LENGTH → body.length.toString) else None) ++
+      contentLength.map(Send.CONTENT_LENGTH -> _) ++
       contentType.map(Send.CONTENT_TYPE -> _)
 
 }
