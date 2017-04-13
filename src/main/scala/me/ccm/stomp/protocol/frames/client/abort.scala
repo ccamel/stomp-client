@@ -26,7 +26,7 @@ package me.ccm.stomp.protocol.frames.client
 import me.ccm.stomp.protocol.frames.{StandardStompHeader, StompFrame, TransactionHeader}
 
 case class Abort(transaction: String,
-               additionalHeaders: Map[String, String] = Map.empty) extends StompFrame {
+                 additionalHeaders: Map[String, String] = Map.empty) extends StompFrame {
 
   override val frameName: String = Abort.frameName
 

@@ -23,7 +23,7 @@
  */
 package me.ccm.stomp.protocol.frames.server
 
-import me.ccm.stomp.protocol.frames.{ReceiptIdHeader}
+import me.ccm.stomp.protocol.frames.ReceiptIdHeader
 
 case class Receipt(receiptId: String,
                    additionalHeaders: Map[String, String] = Map.empty) extends ServerStompFrame {

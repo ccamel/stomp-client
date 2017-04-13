@@ -32,15 +32,14 @@ case class Send(destination: String,
                 additionalHeaders: Map[String, String] = Map.empty) extends ClientStompFrame {
 
   override val frameName: String = Send.frameName
-
-  def contentLength = if (!body.isEmpty) Some(body.length.toString) else None
-
   override val headers: Map[String, String] =
     additionalHeaders ++
       Some(Send.DESTINATION -> destination) ++
       transaction.map(Send.TRANSACTION -> _) ++
       contentLength.map(Send.CONTENT_LENGTH -> _) ++
       contentType.map(Send.CONTENT_TYPE -> _)
+
+  def contentLength = if (!body.isEmpty) Some(body.length.toString) else None
 
 }
 

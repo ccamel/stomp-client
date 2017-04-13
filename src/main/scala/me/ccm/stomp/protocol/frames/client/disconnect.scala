@@ -23,7 +23,7 @@
  */
 package me.ccm.stomp.protocol.frames.client
 
-import me.ccm.stomp.protocol.frames.{StandardStompHeader}
+import me.ccm.stomp.protocol.frames.StandardStompHeader
 
 case class Disconnect(receipt: String,
                       additionalHeaders: Map[String, String] = Map.empty) extends ClientStompFrame {

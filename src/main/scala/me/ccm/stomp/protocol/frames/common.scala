@@ -130,22 +130,22 @@ trait ReceiptIdHeader extends StompHeader {
 }
 
 object Headers extends StompHeader
-with ContentLengthHeader
-with ContentTypeHeader
-with ReceiptHeader
-with AcceptVersionHeader
-with HostHeader
-with LoginHeader
-with PasscodeHeader
-with HeartBeatHeader
-with VersionHeader
-with SessionHeader
-with ServerHeader
-with DestinationHeader
-with TransactionHeader
-with IdHeader
-with AckHeader
-with MessageHeader
-with SubscriptionHeader
-with MessageIdHeader
-with ReceiptIdHeader
+  with ContentLengthHeader
+  with ContentTypeHeader
+  with ReceiptHeader
+  with AcceptVersionHeader
+  with HostHeader
+  with LoginHeader
+  with PasscodeHeader
+  with HeartBeatHeader
+  with VersionHeader
+  with SessionHeader
+  with ServerHeader
+  with DestinationHeader
+  with TransactionHeader
+  with IdHeader
+  with AckHeader
+  with MessageHeader
+  with SubscriptionHeader
+  with MessageIdHeader
+  with ReceiptIdHeader

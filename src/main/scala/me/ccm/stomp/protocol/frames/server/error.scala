@@ -23,7 +23,6 @@
  */
 package me.ccm.stomp.protocol.frames.server
 
-import com.sun.xml.internal.bind.api.impl.NameConverter.Standard
 import me.ccm.stomp.protocol.frames.{MessageHeader, ReceiptIdHeader, StandardStompHeader}
 
 case class Error(receiptId: Option[String] = None,
