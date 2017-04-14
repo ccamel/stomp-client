@@ -27,8 +27,9 @@ package me.ccm.stomp.util
   *
   */
 object ByteUtils {
-  def asHexDump(bs: Array[Byte], size: Int = 0x10): String = {
-    require(bs != null, "array of bytes must not be null")
+  val defaultSize = 0x10
+
+  def asHexDump(bs: Array[Byte], size: Int = defaultSize): String = {
     require(size > 0, "size mut be positive")
 
     val bufBytes = new Array[Option[Byte]](size)

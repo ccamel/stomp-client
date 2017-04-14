@@ -39,7 +39,7 @@ case class Send(destination: String,
       contentLength.map(Send.CONTENT_LENGTH -> _) ++
       contentType.map(Send.CONTENT_TYPE -> _)
 
-  def contentLength = if (!body.isEmpty) Some(body.length.toString) else None
+  def contentLength: Option[String] = if (!body.isEmpty) Some(body.length.toString) else None
 
 }
 

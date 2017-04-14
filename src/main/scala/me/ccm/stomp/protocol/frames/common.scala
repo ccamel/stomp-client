@@ -47,7 +47,6 @@ trait StompFrameProps extends Immutable {
 
 trait StompHeader
 
-
 trait ContentLengthHeader extends StompHeader {
   val CONTENT_LENGTH: String = "content-length"
 }
