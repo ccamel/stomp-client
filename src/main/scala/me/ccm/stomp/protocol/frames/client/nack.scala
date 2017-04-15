@@ -35,8 +35,6 @@ case class Nack(id: String,
     additionalHeaders ++
       Some(Nack.ID -> id) ++
       transaction.map(Nack.TRANSACTION -> _)
-
-  override def body: Array[Byte] = Array.emptyByteArray
 }
 
 object Nack extends ClientFrameProps with StandardStompHeader with TransactionHeader with IdHeader {

@@ -57,8 +57,6 @@ class UnsubscribeTest extends FlatSpec with Matchers with GivenWhenThen with Tab
     val f = Unsubscribe(id)
 
     Unsubscribe.hasBody should be(false)
-    f.body should be(emptyByteArray)
-    f.hasBodyContent should be(false)
   }
 
   it must "be correctly constructed from a map" in {

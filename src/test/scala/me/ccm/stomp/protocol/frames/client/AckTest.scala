@@ -80,8 +80,6 @@ class AckTest extends FlatSpec with Matchers with GivenWhenThen with TableDriven
     val f = Ack("123")
 
     Ack.hasBody should be(false)
-    f.body should be(emptyByteArray)
-    f.hasBodyContent should be(false)
   }
 
   it must "be correctly constructed from a map" in {

@@ -33,8 +33,6 @@ case class Unsubscribe(id: String,
   override val headers: Map[String, String] =
     additionalHeaders ++
       Some(Unsubscribe.ID -> id)
-
-  override val body: Array[Byte] = Array.emptyByteArray
 }
 
 object Unsubscribe extends ClientFrameProps with StandardStompHeader with IdHeader {

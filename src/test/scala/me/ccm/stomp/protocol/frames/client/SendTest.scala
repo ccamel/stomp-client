@@ -35,10 +35,11 @@ import scala.Array.emptyByteArray
 class SendTest extends FlatSpec with Matchers with GivenWhenThen with TableDrivenPropertyChecks {
   behavior of "The SEND frame"
 
+  val body = "Hello world".getBytes
   val destination = "/queue/a"
   val transaction = "tx1"
+  val contentLength = body.length
   val contentType = "text/plain"
-  val body = "Hello world".getBytes
 
   it must "be named send" in {
     val f = Send(destination)
@@ -90,7 +91,7 @@ class SendTest extends FlatSpec with Matchers with GivenWhenThen with TableDrive
     }
     {
       Given("a SEND frame with content-type")
-      val f = Send(destination, None, Some(contentType))
+      val f = Send(destination, None, None, Some(contentType))
 
       Then("there must be a content-type")
       Send.CONTENT_TYPE should be("content-type")
@@ -100,18 +101,34 @@ class SendTest extends FlatSpec with Matchers with GivenWhenThen with TableDrive
     }
   }
 
+  it must "include an optional content-length header" in {
+    {
+      Given("a SEND frame without content-length")
+      val f = Send(destination)
+
+      Then("there must be no content-type at all")
+      f.headers should not contain key(Send.CONTENT_LENGTH)
+      f.contentLength should be(None)
+      f.additionalHeaders should not contain key(Send.CONTENT_LENGTH)
+    }
+    {
+      Given("a SEND frame with content-length")
+      val f = Send(destination, None, Some(contentLength))
+
+      Then("there must be a content-length")
+      Send.CONTENT_LENGTH should be("content-length")
+      f.contentLength should equal(Some(contentLength))
+      f.headers should contain(Send.CONTENT_LENGTH -> contentLength.toString)
+      f.additionalHeaders should not contain key(Send.CONTENT_LENGTH)
+    }
+  }
+
   it must "have a body" in {
-    val f = Send(destination, None, None, body)
+    val f = Send(destination, None, None, None, body)
 
     Send.hasBody should be(true)
     f.body should be(body)
     f.hasBodyContent should be(true)
-  }
-
-  it must "have a content-length when frame has a body" in {
-    val f = Send(destination, None, None, body)
-
-    f.contentLength should be (Some(body.length.toString))
   }
 
   it must "be correctly constructed from a map" in {
@@ -125,9 +142,10 @@ class SendTest extends FlatSpec with Matchers with GivenWhenThen with TableDrive
         (Map(
           "destination" -> destination,
           "transaction" -> transaction,
+          "content-length" -> contentLength.toString,
           "content-type" -> contentType
         ),
-          Send(destination, Some(transaction), Some(contentType)))
+          Send(destination, Some(transaction), Some(contentLength), Some(contentType)))
       )
 
     forAll(data) { (m: Map[String, String], result: Send) =>

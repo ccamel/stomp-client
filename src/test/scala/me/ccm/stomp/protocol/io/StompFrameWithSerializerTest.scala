@@ -40,7 +40,7 @@ class StompFrameWithSerializerTest extends FlatSpec with TableDrivenPropertyChec
       (Ack("123"),
         """00000000  41 43 4b 0a 69 64 3a 31 32 33 0a 0a 00           |ACK.id:123...|
           #""".stripMargin('#')),
-      (Message("dest-1", "message-id", "sub-1", Some("ack-1"), Some("application/text"), Array(1, 2, 3, 4, 5).map(_.toByte)),
+      (Message("dest-1", "message-id", "sub-1", Some("ack-1"), Some(5), Some("application/text"), Array(1, 2, 3, 4, 5).map(_.toByte)),
         """00000000  4d 45 53 53 41 47 45 0a 6d 65 73 73 61 67 65 2d  |MESSAGE.message-|
           #00000010  69 64 3a 6d 65 73 73 61 67 65 2d 69 64 0a 73 75  |id:message-id.su|
           #00000020  62 73 63 72 69 70 74 69 6f 6e 3a 73 75 62 2d 31  |bscription:sub-1|

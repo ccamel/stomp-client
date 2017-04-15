@@ -23,20 +23,21 @@
  */
 package me.ccm.stomp.protocol.frames.server
 
-import me.ccm.stomp.protocol.frames.{MessageHeader, ReceiptIdHeader, StandardStompHeader}
+import me.ccm.stomp.protocol.frames.{Body, MessageHeader, ReceiptIdHeader, StandardStompHeader}
 
 case class Error(receiptId: Option[String] = None,
+                 contentLength: Option[Long] = None,
                  contentType: Option[String] = None,
                  message: Option[String] = None,
                  body: Array[Byte] = Array.emptyByteArray,
-                 additionalHeaders: Map[String, String] = Map.empty) extends ServerStompFrame {
+                 additionalHeaders: Map[String, String] = Map.empty) extends ServerStompFrame with Body {
 
   override val frameName: String = Error.frameName
 
   override val headers: Map[String, String] =
     additionalHeaders ++
       receiptId.map(Error.RECEIPT_ID -> _) ++
-      (if (!body.isEmpty) Some(Error.CONTENT_LENGTH → body.length.toString) else None) ++
+      contentLength.map(Error.CONTENT_LENGTH -> _.toString) ++
       contentType.map(Error.CONTENT_TYPE -> _) ++
       message.map(Error.MESSAGE -> _)
 }
@@ -50,10 +51,11 @@ object Error extends ServerFrameProps
 
   def apply(headers: Map[String, String], body: Array[Byte]): Error = {
     val receiptId = headers.get(RECEIPT_ID)
+    val contentLength = headers.get(CONTENT_LENGTH).map(_.toLong)
     val contentType = headers.get(CONTENT_TYPE)
     val message = headers.get(MESSAGE)
     val additionalHeaders = headers - (RECEIPT_ID, CONTENT_LENGTH, CONTENT_TYPE, MESSAGE)
 
-    Error(receiptId, contentType, message, body, additionalHeaders)
+    Error(receiptId, contentLength, contentType, message, body, additionalHeaders)
   }
 }

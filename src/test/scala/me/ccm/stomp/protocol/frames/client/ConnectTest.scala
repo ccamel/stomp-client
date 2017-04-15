@@ -137,8 +137,6 @@ class ConnectTest extends FlatSpec with Matchers with GivenWhenThen with TableDr
     val f = Connect(acceptVersion, host)
 
     Connect.hasBody should be(false)
-    f.body should be(emptyByteArray)
-    f.hasBodyContent should be(false)
   }
 
   it must "be correctly constructed from a map" in {

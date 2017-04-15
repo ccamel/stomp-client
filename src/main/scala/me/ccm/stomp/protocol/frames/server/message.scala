@@ -30,9 +30,10 @@ case class Message(destination: String,
                    messageId: String,
                    subscription: String,
                    ack: Option[String] = None,
+                   contentLength: Option[Long] = None,
                    contentType: Option[String] = None,
                    body: Array[Byte] = Array.emptyByteArray,
-                   additionalHeaders: Map[String, String] = Map.empty) extends ServerStompFrame {
+                   additionalHeaders: Map[String, String] = Map.empty) extends ServerStompFrame with Body {
 
   override val frameName: String = Message.frameName
 
@@ -42,7 +43,7 @@ case class Message(destination: String,
       Some(Message.MESSAGE_ID -> messageId) ++
       Some(Message.SUBSCRIPTION -> subscription) ++
       ack.map(Message.ACK -> _) ++
-      (if (!body.isEmpty) Some(Message.CONTENT_LENGTH → body.length.toString) else None) ++
+      contentLength.map(Message.CONTENT_LENGTH -> _.toString) ++
       contentType.map(Message.CONTENT_TYPE -> _)
 }
 
@@ -60,9 +61,10 @@ object Message extends ServerFrameProps
     val messageId = headers(MESSAGE_ID)
     val subscription = headers(SUBSCRIPTION)
     val ack = headers.get(ACK)
+    val contentLength = headers.get(CONTENT_LENGTH).map(_.toLong)
     val contentType = headers.get(CONTENT_TYPE)
     val additionalHeaders = headers - (RECEIPT_ID, CONTENT_LENGTH, CONTENT_TYPE, MESSAGE)
 
-    Message(destination, messageId, subscription, ack, contentType, body, additionalHeaders)
+    Message(destination, messageId, subscription, ack, contentLength, contentType, body, additionalHeaders)
   }
 }

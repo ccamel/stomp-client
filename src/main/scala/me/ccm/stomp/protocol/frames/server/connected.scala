@@ -39,8 +39,6 @@ case class Connected(version: String,
       session.map(Connected.SESSION -> _) ++
       server.map(Connected.SERVER -> _) ++
       heartBeat.map(Connected.HEART_BEAT -> _)
-
-  override val body: Array[Byte] = Array.emptyByteArray
 }
 
 object Connected extends ServerFrameProps

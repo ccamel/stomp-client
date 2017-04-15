@@ -33,8 +33,6 @@ case class Commit(transaction: String,
   override val headers: Map[String, String] =
     additionalHeaders ++
       Some(Commit.TRANSACTION -> transaction)
-
-  override def body: Array[Byte] = Array.emptyByteArray
 }
 
 object Commit extends ClientFrameProps with StandardStompHeader with TransactionHeader {

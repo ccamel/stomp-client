@@ -33,8 +33,6 @@ case class Receipt(receiptId: String,
   override val headers: Map[String, String] =
     additionalHeaders ++
       Some(Receipt.RECEIPT_ID -> receiptId)
-
-  override def body: Array[Byte] = Array.emptyByteArray
 }
 
 object Receipt extends ServerFrameProps with ReceiptIdHeader {

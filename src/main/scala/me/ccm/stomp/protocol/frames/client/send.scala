@@ -23,24 +23,22 @@
  */
 package me.ccm.stomp.protocol.frames.client
 
-import me.ccm.stomp.protocol.frames.{DestinationHeader, StandardStompHeader, TransactionHeader}
+import me.ccm.stomp.protocol.frames.{Body, DestinationHeader, StandardStompHeader, TransactionHeader}
 
 case class Send(destination: String,
                 transaction: Option[String] = None,
+                contentLength: Option[Long] = None,
                 contentType: Option[String] = None,
                 body: Array[Byte] = Array.emptyByteArray,
-                additionalHeaders: Map[String, String] = Map.empty) extends ClientStompFrame {
+                additionalHeaders: Map[String, String] = Map.empty) extends ClientStompFrame with Body {
 
   override val frameName: String = Send.frameName
   override val headers: Map[String, String] =
     additionalHeaders ++
       Some(Send.DESTINATION -> destination) ++
       transaction.map(Send.TRANSACTION -> _) ++
-      contentLength.map(Send.CONTENT_LENGTH -> _) ++
+      contentLength.map(Send.CONTENT_LENGTH -> _.toString) ++
       contentType.map(Send.CONTENT_TYPE -> _)
-
-  def contentLength: Option[String] = if (!body.isEmpty) Some(body.length.toString) else None
-
 }
 
 object Send extends ClientFrameProps with StandardStompHeader with TransactionHeader with DestinationHeader {
@@ -50,9 +48,10 @@ object Send extends ClientFrameProps with StandardStompHeader with TransactionHe
   def apply(headers: Map[String, String], body: Array[Byte]): Send = {
     val destination = headers(DESTINATION)
     val transaction = headers.get(TRANSACTION)
+    val contentLength = headers.get(CONTENT_LENGTH).map(_.toLong)
     val contentType = headers.get(CONTENT_TYPE)
     val additionalHeaders = headers - (DESTINATION, TRANSACTION, CONTENT_LENGTH, CONTENT_TYPE)
 
-    Send(destination, transaction, contentType, body, additionalHeaders)
+    Send(destination, transaction, contentLength, contentType, body, additionalHeaders)
   }
 }

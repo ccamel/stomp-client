@@ -41,8 +41,6 @@ case class Connect(acceptVersion: String,
       login.map(Connect.LOGIN -> _) ++
       passcode.map(Connect.PASSCODE -> _) ++
       heartBeat.map(Connect.HEART_BEAT -> _)
-
-  override def body: Array[Byte] = Array.emptyByteArray
 }
 
 object Connect extends ClientFrameProps

@@ -78,8 +78,6 @@ class SubscribeTest extends FlatSpec with Matchers with GivenWhenThen with Table
     val f = Subscribe(destination, id, ack)
 
     Subscribe.hasBody should be(false)
-    f.body should be(emptyByteArray)
-    f.hasBodyContent should be(false)
   }
 
   it must "be correctly constructed from a map" in {

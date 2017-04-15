@@ -28,11 +28,18 @@ trait StompFrame extends Immutable {
 
   def headers: Map[String, String]
 
+  def hasHeaders: Boolean = headers.nonEmpty
+}
+
+trait Body {
+  this: StompFrame =>
   def body: Array[Byte]
 
-  def hasHeaders: Boolean = headers.nonEmpty
-
   def hasBodyContent: Boolean = !body.isEmpty
+
+  def contentLength: Option[Long]
+
+  def contentType: Option[String]
 }
 
 trait StompFrameProps extends Immutable {

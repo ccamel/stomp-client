@@ -57,8 +57,6 @@ class CommitTest extends FlatSpec with Matchers with GivenWhenThen with TableDri
     val f = Commit("123")
 
     Commit.hasBody should be(false)
-    f.body should be(emptyByteArray)
-    f.hasBodyContent should be(false)
   }
 
   it must "be correctly constructed from a map" in {

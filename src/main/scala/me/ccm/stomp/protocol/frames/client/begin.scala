@@ -33,8 +33,6 @@ case class Begin(transaction: String,
   override val headers: Map[String, String] =
     additionalHeaders ++
       Some(Begin.TRANSACTION -> transaction)
-
-  override def body: Array[Byte] = Array.emptyByteArray
 }
 
 object Begin extends ClientFrameProps with StandardStompHeader with TransactionHeader {

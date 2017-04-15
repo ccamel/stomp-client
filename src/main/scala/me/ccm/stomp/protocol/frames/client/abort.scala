@@ -33,8 +33,6 @@ case class Abort(transaction: String,
   override val headers: Map[String, String] =
     additionalHeaders ++
       Some(Abort.TRANSACTION -> transaction)
-
-  override def body: Array[Byte] = Array.emptyByteArray
 }
 
 object Abort extends ClientFrameProps with StandardStompHeader with TransactionHeader {

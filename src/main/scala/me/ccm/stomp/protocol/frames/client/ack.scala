@@ -35,8 +35,6 @@ case class Ack(id: String,
     additionalHeaders ++
       Some(Ack.ID -> id) ++
       transaction.map(Ack.TRANSACTION -> _)
-
-  override def body: Array[Byte] = Array.emptyByteArray
 }
 
 object Ack extends ClientFrameProps with StandardStompHeader with TransactionHeader with IdHeader {

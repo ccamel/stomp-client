@@ -80,8 +80,6 @@ class NackTest extends FlatSpec with Matchers with GivenWhenThen with TableDrive
     val f = Nack("123")
 
     Nack.hasBody should be(false)
-    f.body should be(emptyByteArray)
-    f.hasBodyContent should be(false)
   }
 
   it must "be correctly constructed from a map" in {

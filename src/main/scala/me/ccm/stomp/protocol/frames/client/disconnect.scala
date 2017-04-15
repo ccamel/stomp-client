@@ -33,8 +33,6 @@ case class Disconnect(receipt: String,
   override val headers: Map[String, String] =
     additionalHeaders ++
       Some(Disconnect.RECEIPT -> receipt)
-
-  override def body: Array[Byte] = Array.emptyByteArray
 }
 
 object Disconnect extends ClientFrameProps with StandardStompHeader {

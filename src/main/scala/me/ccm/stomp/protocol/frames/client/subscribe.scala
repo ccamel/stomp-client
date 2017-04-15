@@ -37,8 +37,6 @@ case class Subscribe(destination: String,
       Some(Subscribe.DESTINATION -> destination) ++
       Some(Subscribe.ID -> id) ++
       Some(Subscribe.ACK -> ack)
-
-  override def body: Array[Byte] = Array.emptyByteArray
 }
 
 object Subscribe extends ClientFrameProps with StandardStompHeader with IdHeader with AckHeader with DestinationHeader {

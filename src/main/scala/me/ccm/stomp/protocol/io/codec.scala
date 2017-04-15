@@ -24,7 +24,7 @@
 
 package me.ccm.stomp.protocol
 
-import me.ccm.stomp.protocol.frames.StompFrame
+import me.ccm.stomp.protocol.frames.{Body, StompFrame}
 
 import scala.collection.mutable
 
@@ -53,7 +53,12 @@ package object io {
 
       builder += LineFeed
       builder += LineFeed
-      builder ++= f.body
+
+      // FIXME: I don't like this line
+      f match {
+        case x: Body => builder ++= x.body
+        case _ =>
+      }
 
       builder += FrameEnd
 

@@ -57,8 +57,6 @@ class BeginTest extends FlatSpec with Matchers with GivenWhenThen with TableDriv
     val f = Begin("123")
 
     Begin.hasBody should be(false)
-    f.body should be(emptyByteArray)
-    f.hasBodyContent should be(false)
   }
 
   it must "be correctly constructed from a map" in {
