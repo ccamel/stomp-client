@@ -24,10 +24,27 @@
 package me.ccm.stomp.protocol.frames.client
 
 import me.ccm.stomp.protocol.frames._
+import me.ccm.stomp.protocol.frames.client.AckHeaderValue.withName
+
+object AckHeaderValue {
+  sealed abstract class EnumVal( val name: String) {
+    override def toString: String = name
+  }
+  case object Auto extends EnumVal( "auto")
+  case object Client extends EnumVal("client")
+  case object ClientIndividual extends EnumVal("client-individual")
+
+  def withName(v: String): Option[EnumVal] = v match {
+    case Auto.name => Some(Auto)
+    case Client.name => Some(Client)
+    case ClientIndividual.name => Some(ClientIndividual)
+    case _ => None
+  }
+}
 
 case class Subscribe(destination: String,
                      id: String,
-                     ack: String,
+                     ack: AckHeaderValue.EnumVal,
                      additionalHeaders: Map[String, String] = Map.empty) extends ClientStompFrame {
 
   override val frameName: String = Subscribe.frameName
@@ -36,7 +53,7 @@ case class Subscribe(destination: String,
     additionalHeaders ++
       Some(Subscribe.DESTINATION -> destination) ++
       Some(Subscribe.ID -> id) ++
-      Some(Subscribe.ACK -> ack)
+      Some(Subscribe.ACK -> ack.name)
 }
 
 object Subscribe extends ClientFrameProps with StandardStompHeader with IdHeader with AckHeader with DestinationHeader {
@@ -46,7 +63,7 @@ object Subscribe extends ClientFrameProps with StandardStompHeader with IdHeader
   def apply(headers: Map[String, String]): Subscribe = {
     val destination = headers(DESTINATION)
     val id = headers(ID)
-    val ack = headers(ACK)
+    val ack = withName(headers(ACK)).get
     val additionalHeaders = headers - (DESTINATION, ID, ACK)
 
     Subscribe(destination, id, ack, additionalHeaders)

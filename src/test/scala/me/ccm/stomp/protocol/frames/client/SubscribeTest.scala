@@ -27,8 +27,6 @@ package me.ccm.stomp.protocol.frames.client
 import org.scalatest._
 import org.scalatest.prop.TableDrivenPropertyChecks
 
-import scala.Array.emptyByteArray
-
 /**
   *
   */
@@ -37,7 +35,7 @@ class SubscribeTest extends FlatSpec with Matchers with GivenWhenThen with Table
 
   val destination = "/queue/foo/"
   val id = "id-0"
-  val ack = "client"
+  val ack = AckHeaderValue.Client
 
   it must "be named subscribe" in {
     val f = Subscribe(destination, id, ack)
@@ -60,7 +58,7 @@ class SubscribeTest extends FlatSpec with Matchers with GivenWhenThen with Table
 
     Subscribe.ACK should be("ack")
     f.ack should equal(ack)
-    f.headers should contain(Subscribe.ACK -> ack)
+    f.headers should contain(Subscribe.ACK -> ack.name)
     f.additionalHeaders should not contain key(Subscribe.ACK)
   }
 
@@ -87,7 +85,7 @@ class SubscribeTest extends FlatSpec with Matchers with GivenWhenThen with Table
         (Map(
           "destination" -> destination,
           "id" -> id,
-          "ack" -> ack
+          "ack" -> ack.name
         ),
           Subscribe(destination, id, ack))
       )
