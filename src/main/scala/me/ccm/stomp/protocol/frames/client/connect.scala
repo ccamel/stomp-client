@@ -32,7 +32,7 @@ case class Connect(acceptVersion: String,
                    heartBeat: Option[String] = None,
                    additionalHeaders: Map[String, String] = Map.empty) extends ClientStompFrame {
 
-  override val frameName: String = Connect.frameName
+  override val command: String = Connect.command
 
   override val headers: Map[String, String] =
     additionalHeaders ++
@@ -51,7 +51,7 @@ object Connect extends ClientFrameProps
   with LoginHeader
   with HostHeader
   with AcceptVersionHeader {
-  override val frameName: String = "CONNECT"
+  override val command: String = "CONNECT"
   override val hasBody: Boolean = false
 
   def apply(headers: Map[String, String]): Connect = {

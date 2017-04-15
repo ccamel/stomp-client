@@ -28,7 +28,7 @@ import me.ccm.stomp.protocol.frames.{IdHeader, StandardStompHeader}
 case class Unsubscribe(id: String,
                        additionalHeaders: Map[String, String] = Map.empty) extends ClientStompFrame {
 
-  override val frameName: String = Unsubscribe.frameName
+  override val command: String = Unsubscribe.command
 
   override val headers: Map[String, String] =
     additionalHeaders ++
@@ -36,7 +36,7 @@ case class Unsubscribe(id: String,
 }
 
 object Unsubscribe extends ClientFrameProps with StandardStompHeader with IdHeader {
-  override val frameName: String = "UNSUBSCRIBE"
+  override val command: String = "UNSUBSCRIBE"
   override val hasBody: Boolean = false
 
   def apply(headers: Map[String, String]): Unsubscribe = {

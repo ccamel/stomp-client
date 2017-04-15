@@ -28,7 +28,7 @@ import me.ccm.stomp.protocol.frames.{StandardStompHeader, StompFrame, Transactio
 case class Commit(transaction: String,
                   additionalHeaders: Map[String, String] = Map.empty) extends StompFrame {
 
-  override val frameName: String = Commit.frameName
+  override val command: String = Commit.command
 
   override val headers: Map[String, String] =
     additionalHeaders ++
@@ -36,7 +36,7 @@ case class Commit(transaction: String,
 }
 
 object Commit extends ClientFrameProps with StandardStompHeader with TransactionHeader {
-  val frameName: String = "COMMIT"
+  val command: String = "COMMIT"
 
   override def hasBody: Boolean = false
 

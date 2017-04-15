@@ -28,7 +28,7 @@ import me.ccm.stomp.protocol.frames.StandardStompHeader
 case class Disconnect(receipt: String,
                       additionalHeaders: Map[String, String] = Map.empty) extends ClientStompFrame {
 
-  override val frameName: String = Disconnect.frameName
+  override val command: String = Disconnect.command
 
   override val headers: Map[String, String] =
     additionalHeaders ++
@@ -36,7 +36,7 @@ case class Disconnect(receipt: String,
 }
 
 object Disconnect extends ClientFrameProps with StandardStompHeader {
-  override val frameName: String = "DISCONNECT"
+  override val command: String = "DISCONNECT"
   override val hasBody: Boolean = false
 
   def apply(headers: Map[String, String]): Disconnect = {

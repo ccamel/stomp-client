@@ -23,7 +23,7 @@
  */
 package me.ccm.stomp.protocol.frames.server
 
-import me.ccm.stomp.protocol.frames.{Body, MessageHeader, ReceiptIdHeader, StandardStompHeader}
+import me.ccm.stomp.protocol.frames._
 
 case class Error(receiptId: Option[String] = None,
                  contentLength: Option[Long] = None,
@@ -32,7 +32,7 @@ case class Error(receiptId: Option[String] = None,
                  body: Array[Byte] = Array.emptyByteArray,
                  additionalHeaders: Map[String, String] = Map.empty) extends ServerStompFrame with Body {
 
-  override val frameName: String = Error.frameName
+  override val command: String = Error.command
 
   override val headers: Map[String, String] =
     additionalHeaders ++
@@ -46,7 +46,7 @@ object Error extends ServerFrameProps
   with StandardStompHeader
   with MessageHeader
   with ReceiptIdHeader {
-  override val frameName: String = "ERROR"
+  override val command: String = "ERROR"
   override val hasBody: Boolean = true
 
   def apply(headers: Map[String, String], body: Array[Byte]): Error = {

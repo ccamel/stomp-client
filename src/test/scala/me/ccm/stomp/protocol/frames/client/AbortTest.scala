@@ -27,8 +27,6 @@ package me.ccm.stomp.protocol.frames.client
 import org.scalatest._
 import org.scalatest.prop.TableDrivenPropertyChecks
 
-import scala.Array.emptyByteArray
-
 /**
   *
   */
@@ -40,8 +38,8 @@ class AbortTest extends FlatSpec with Matchers with GivenWhenThen with TableDriv
   it must "be named abort" in {
     val f = Abort(transaction)
 
-    Abort.frameName should be("ABORT")
-    f.frameName should be("ABORT")
+    Abort.command should be("ABORT")
+    f.command should be("ABORT")
   }
 
   it must "include a transaction header" in {

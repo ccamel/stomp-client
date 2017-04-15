@@ -27,8 +27,6 @@ package me.ccm.stomp.protocol.frames.client
 import org.scalatest._
 import org.scalatest.prop.TableDrivenPropertyChecks
 
-import scala.Array.emptyByteArray
-
 /**
   *
   */
@@ -40,8 +38,8 @@ class BeginTest extends FlatSpec with Matchers with GivenWhenThen with TableDriv
   it must "be named begin" in {
     val f = Begin(transaction)
 
-    Begin.frameName should be("BEGIN")
-    f.frameName should be("BEGIN")
+    Begin.command should be("BEGIN")
+    f.command should be("BEGIN")
   }
 
   it must "include a transaction header" in {

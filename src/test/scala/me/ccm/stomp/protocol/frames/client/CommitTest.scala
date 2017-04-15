@@ -27,8 +27,6 @@ package me.ccm.stomp.protocol.frames.client
 import org.scalatest._
 import org.scalatest.prop.TableDrivenPropertyChecks
 
-import scala.Array.emptyByteArray
-
 /**
   *
   */
@@ -40,8 +38,8 @@ class CommitTest extends FlatSpec with Matchers with GivenWhenThen with TableDri
   it must "be named commit" in {
     val f = Commit(transaction)
 
-    Commit.frameName should be("COMMIT")
-    f.frameName should be("COMMIT")
+    Commit.command should be("COMMIT")
+    f.command should be("COMMIT")
   }
 
   it must "include a transaction header" in {

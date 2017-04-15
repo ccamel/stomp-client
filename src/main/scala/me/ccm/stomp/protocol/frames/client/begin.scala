@@ -28,7 +28,7 @@ import me.ccm.stomp.protocol.frames.{StandardStompHeader, StompFrame, Transactio
 case class Begin(transaction: String,
                  additionalHeaders: Map[String, String] = Map.empty) extends StompFrame {
 
-  override val frameName: String = Begin.frameName
+  override val command: String = Begin.command
 
   override val headers: Map[String, String] =
     additionalHeaders ++
@@ -36,7 +36,7 @@ case class Begin(transaction: String,
 }
 
 object Begin extends ClientFrameProps with StandardStompHeader with TransactionHeader {
-  val frameName: String = "BEGIN"
+  val command: String = "BEGIN"
 
   override def hasBody: Boolean = false
 

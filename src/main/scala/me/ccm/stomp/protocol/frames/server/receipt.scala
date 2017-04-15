@@ -28,7 +28,7 @@ import me.ccm.stomp.protocol.frames.ReceiptIdHeader
 case class Receipt(receiptId: String,
                    additionalHeaders: Map[String, String] = Map.empty) extends ServerStompFrame {
 
-  override val frameName: String = Receipt.frameName
+  override val command: String = Receipt.command
 
   override val headers: Map[String, String] =
     additionalHeaders ++
@@ -36,7 +36,7 @@ case class Receipt(receiptId: String,
 }
 
 object Receipt extends ServerFrameProps with ReceiptIdHeader {
-  override val frameName: String = "RECEIPT"
+  override val command: String = "RECEIPT"
   override val hasBody: Boolean = false
 
   def apply(headers: Map[String, String]): Receipt = {

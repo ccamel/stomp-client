@@ -27,8 +27,6 @@ package me.ccm.stomp.protocol.frames.client
 import org.scalatest._
 import org.scalatest.prop.TableDrivenPropertyChecks
 
-import scala.Array.emptyByteArray
-
 /**
   *
   */
@@ -44,8 +42,8 @@ class SendTest extends FlatSpec with Matchers with GivenWhenThen with TableDrive
   it must "be named send" in {
     val f = Send(destination)
 
-    Send.frameName should be("SEND")
-    f.frameName should be("SEND")
+    Send.command should be("SEND")
+    f.command should be("SEND")
   }
 
   it must "include a destination header" in {

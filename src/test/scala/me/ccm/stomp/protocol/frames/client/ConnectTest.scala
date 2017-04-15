@@ -27,8 +27,6 @@ package me.ccm.stomp.protocol.frames.client
 import org.scalatest._
 import org.scalatest.prop.TableDrivenPropertyChecks
 
-import scala.Array.emptyByteArray
-
 /**
   *
   */
@@ -41,8 +39,8 @@ class ConnectTest extends FlatSpec with Matchers with GivenWhenThen with TableDr
   it must "be named connect" in {
     val f = Connect(acceptVersion, host)
 
-    Connect.frameName should be("CONNECT")
-    f.frameName should be("CONNECT")
+    Connect.command should be("CONNECT")
+    f.command should be("CONNECT")
   }
 
   it must "include an accept-version header" in {

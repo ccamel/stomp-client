@@ -23,13 +23,13 @@
  */
 package me.ccm.stomp.protocol.frames.client
 
-import me.ccm.stomp.protocol.frames.{IdHeader, StandardStompHeader, StompFrame, TransactionHeader}
+import me.ccm.stomp.protocol.frames._
 
 case class Ack(id: String,
                transaction: Option[String] = None,
                additionalHeaders: Map[String, String] = Map.empty) extends StompFrame {
 
-  override val frameName: String = Ack.frameName
+  override val command: String = Ack.command
 
   override val headers: Map[String, String] =
     additionalHeaders ++
@@ -37,8 +37,11 @@ case class Ack(id: String,
       transaction.map(Ack.TRANSACTION -> _)
 }
 
-object Ack extends ClientFrameProps with StandardStompHeader with TransactionHeader with IdHeader {
-  val frameName: String = "ACK"
+object Ack extends ClientFrameProps
+  with StandardStompHeader
+  with TransactionHeader
+  with IdHeader {
+  val command: String = "ACK"
 
   override def hasBody: Boolean = false
 

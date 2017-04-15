@@ -23,9 +23,11 @@
  */
 package me.ccm.stomp.protocol.frames
 
-trait StompFrame extends Immutable {
-  def frameName: String
+trait Command {
+  def command: String
+}
 
+trait StompFrame extends Immutable with Command {
   def headers: Map[String, String]
 
   def hasHeaders: Boolean = headers.nonEmpty
@@ -42,14 +44,12 @@ trait Body {
   def contentType: Option[String]
 }
 
-trait StompFrameProps extends Immutable {
+trait StompFrameProps extends Immutable with Command {
   def isClientFrame: Boolean
 
   def isServerFrame: Boolean = !isClientFrame
 
   def hasBody: Boolean = false
-
-  def frameName: String
 }
 
 trait StompHeader

@@ -42,8 +42,8 @@ class ErrorTest extends FlatSpec with Matchers with GivenWhenThen with TableDriv
   it must "be named error" in {
     val f = Error()
 
-    Error.frameName should be("ERROR")
-    f.frameName should be("ERROR")
+    Error.command should be("ERROR")
+    f.command should be("ERROR")
   }
 
   it must "include an optional receiptId header" in {

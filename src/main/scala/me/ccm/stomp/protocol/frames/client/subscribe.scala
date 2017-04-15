@@ -47,7 +47,7 @@ case class Subscribe(destination: String,
                      ack: AckHeaderValue.EnumVal,
                      additionalHeaders: Map[String, String] = Map.empty) extends ClientStompFrame {
 
-  override val frameName: String = Subscribe.frameName
+  override val command: String = Subscribe.command
 
   override val headers: Map[String, String] =
     additionalHeaders ++
@@ -56,8 +56,12 @@ case class Subscribe(destination: String,
       Some(Subscribe.ACK -> ack.name)
 }
 
-object Subscribe extends ClientFrameProps with StandardStompHeader with IdHeader with AckHeader with DestinationHeader {
-  override val frameName: String = "SUBSCRIBE"
+object Subscribe extends ClientFrameProps
+  with StandardStompHeader
+  with IdHeader
+  with AckHeader
+  with DestinationHeader {
+  override val command: String = "SUBSCRIBE"
   override val hasBody: Boolean = false
 
   def apply(headers: Map[String, String]): Subscribe = {

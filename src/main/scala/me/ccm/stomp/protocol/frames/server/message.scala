@@ -35,7 +35,7 @@ case class Message(destination: String,
                    body: Array[Byte] = Array.emptyByteArray,
                    additionalHeaders: Map[String, String] = Map.empty) extends ServerStompFrame with Body {
 
-  override val frameName: String = Message.frameName
+  override val command: String = Message.command
 
   override val headers: Map[String, String] =
     additionalHeaders ++
@@ -53,7 +53,7 @@ object Message extends ServerFrameProps
   with SubscriptionHeader
   with MessageIdHeader
   with DestinationHeader {
-  override val frameName: String = "MESSAGE"
+  override val command: String = "MESSAGE"
   override val hasBody: Boolean = false
 
   def apply(headers: Map[String, String], body: Array[Byte]): Message = {

@@ -40,8 +40,8 @@ class SubscribeTest extends FlatSpec with Matchers with GivenWhenThen with Table
   it must "be named subscribe" in {
     val f = Subscribe(destination, id, ack)
 
-    Subscribe.frameName should be("SUBSCRIBE")
-    f.frameName should be("SUBSCRIBE")
+    Subscribe.command should be("SUBSCRIBE")
+    f.command should be("SUBSCRIBE")
   }
 
   it must "include a destination header" in {

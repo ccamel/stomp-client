@@ -23,7 +23,7 @@
  */
 package me.ccm.stomp.protocol.frames.client
 
-import me.ccm.stomp.protocol.frames.{Body, DestinationHeader, StandardStompHeader, TransactionHeader}
+import me.ccm.stomp.protocol.frames._
 
 case class Send(destination: String,
                 transaction: Option[String] = None,
@@ -32,7 +32,7 @@ case class Send(destination: String,
                 body: Array[Byte] = Array.emptyByteArray,
                 additionalHeaders: Map[String, String] = Map.empty) extends ClientStompFrame with Body {
 
-  override val frameName: String = Send.frameName
+  override val command: String = Send.command
   override val headers: Map[String, String] =
     additionalHeaders ++
       Some(Send.DESTINATION -> destination) ++
@@ -42,7 +42,7 @@ case class Send(destination: String,
 }
 
 object Send extends ClientFrameProps with StandardStompHeader with TransactionHeader with DestinationHeader {
-  override val frameName: String = "SEND"
+  override val command: String = "SEND"
   override val hasBody: Boolean = true
 
   def apply(headers: Map[String, String], body: Array[Byte]): Send = {

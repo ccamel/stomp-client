@@ -27,8 +27,6 @@ package me.ccm.stomp.protocol.frames.client
 import org.scalatest._
 import org.scalatest.prop.TableDrivenPropertyChecks
 
-import scala.Array.emptyByteArray
-
 /**
   *
   */
@@ -38,8 +36,8 @@ class AckTest extends FlatSpec with Matchers with GivenWhenThen with TableDriven
   it must "be named ack" in {
     val f = Ack("123")
 
-    Ack.frameName should be("ACK")
-    f.frameName should be("ACK")
+    Ack.command should be("ACK")
+    f.command should be("ACK")
   }
 
   it must "include an id header" in {

@@ -27,8 +27,6 @@ package me.ccm.stomp.protocol.frames.client
 import org.scalatest._
 import org.scalatest.prop.TableDrivenPropertyChecks
 
-import scala.Array.emptyByteArray
-
 /**
   *
   */
@@ -38,8 +36,8 @@ class NackTest extends FlatSpec with Matchers with GivenWhenThen with TableDrive
   it must "be named ack" in {
     val f = Nack("123")
 
-    Nack.frameName should be("NACK")
-    f.frameName should be("NACK")
+    Nack.command should be("NACK")
+    f.command should be("NACK")
   }
 
   it must "include an id header" in {

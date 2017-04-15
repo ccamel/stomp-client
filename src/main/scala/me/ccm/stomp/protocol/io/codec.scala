@@ -41,7 +41,7 @@ package object io {
     def asStompBytes: Array[Byte] = {
       val builder = new mutable.ArrayBuilder.ofByte
 
-      builder ++= f.frameName.getBytes
+      builder ++= f.command.getBytes
 
       f.headers.map {
         case (k, v) =>

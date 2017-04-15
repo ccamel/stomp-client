@@ -31,7 +31,7 @@ case class Connected(version: String,
                      heartBeat: Option[String] = None,
                      additionalHeaders: Map[String, String] = Map.empty) extends ServerStompFrame {
 
-  override val frameName: String = Connected.frameName
+  override val command: String = Connected.command
 
   override val headers: Map[String, String] =
     additionalHeaders ++
@@ -46,7 +46,7 @@ object Connected extends ServerFrameProps
   with ServerHeader
   with HeartBeatHeader
   with VersionHeader {
-  override val frameName: String = "CONNECTED"
+  override val command: String = "CONNECTED"
   override val hasBody: Boolean = false
 
   def apply(headers: Map[String, String]): Connected = {

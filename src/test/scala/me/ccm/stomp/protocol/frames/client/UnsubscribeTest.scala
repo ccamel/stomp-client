@@ -27,8 +27,6 @@ package me.ccm.stomp.protocol.frames.client
 import org.scalatest._
 import org.scalatest.prop.TableDrivenPropertyChecks
 
-import scala.Array.emptyByteArray
-
 /**
   *
   */
@@ -40,8 +38,8 @@ class UnsubscribeTest extends FlatSpec with Matchers with GivenWhenThen with Tab
   it must "be named unsubscribe" in {
     val f = Unsubscribe(id)
 
-    Unsubscribe.frameName should be("UNSUBSCRIBE")
-    f.frameName should be("UNSUBSCRIBE")
+    Unsubscribe.command should be("UNSUBSCRIBE")
+    f.command should be("UNSUBSCRIBE")
   }
 
   it must "include an id header" in {

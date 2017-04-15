@@ -27,8 +27,6 @@ package me.ccm.stomp.protocol.frames.client
 import org.scalatest._
 import org.scalatest.prop.TableDrivenPropertyChecks
 
-import scala.Array.emptyByteArray
-
 /**
   *
   */
@@ -40,8 +38,8 @@ class DisconnectTest extends FlatSpec with Matchers with GivenWhenThen with Tabl
   it must "be named connect" in {
     val f = Disconnect(receipt)
 
-    Disconnect.frameName should be("DISCONNECT")
-    f.frameName should be("DISCONNECT")
+    Disconnect.command should be("DISCONNECT")
+    f.command should be("DISCONNECT")
   }
 
   it must "include an receipt header" in {

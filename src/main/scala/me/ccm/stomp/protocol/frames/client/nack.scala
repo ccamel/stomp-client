@@ -29,7 +29,7 @@ case class Nack(id: String,
                 transaction: Option[String] = None,
                 additionalHeaders: Map[String, String] = Map.empty) extends ClientStompFrame {
 
-  override val frameName: String = Nack.frameName
+  override val command: String = Nack.command
 
   override val headers: Map[String, String] =
     additionalHeaders ++
@@ -38,7 +38,7 @@ case class Nack(id: String,
 }
 
 object Nack extends ClientFrameProps with StandardStompHeader with TransactionHeader with IdHeader {
-  override val frameName: String = "NACK"
+  override val command: String = "NACK"
   override val hasBody: Boolean = false
 
   def apply(headers: Map[String, String]): Nack = {
