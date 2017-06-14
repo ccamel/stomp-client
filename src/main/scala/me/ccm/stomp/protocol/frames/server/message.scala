@@ -54,7 +54,7 @@ object Message extends ServerFrameProps
   with MessageIdHeader
   with DestinationHeader {
   override val command: String = "MESSAGE"
-  override val hasBody: Boolean = false
+  override val hasBody: Boolean = true
 
   def apply(headers: Map[String, String], body: Array[Byte]): Message = {
     val destination = headers(DESTINATION)
