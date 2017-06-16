@@ -24,7 +24,6 @@
 package me.ccm.stomp.protocol.frames.server
 
 import me.ccm.stomp.protocol.frames._
-import me.ccm.stomp.protocol.frames.server.Error._
 
 case class Message(destination: String,
                    messageId: String,
@@ -63,7 +62,7 @@ object Message extends ServerFrameProps
     val ack = headers.get(ACK)
     val contentLength = headers.get(CONTENT_LENGTH).map(_.toLong)
     val contentType = headers.get(CONTENT_TYPE)
-    val additionalHeaders = headers - (RECEIPT_ID, CONTENT_LENGTH, CONTENT_TYPE, MESSAGE)
+    val additionalHeaders = headers - (DESTINATION, MESSAGE_ID, SUBSCRIPTION, ACK, CONTENT_LENGTH, CONTENT_TYPE)
 
     Message(destination, messageId, subscription, ack, contentLength, contentType, body, additionalHeaders)
   }
