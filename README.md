@@ -1,6 +1,6 @@
 stomp-client
 ============
-[![MIT](https://img.shields.io/badge/licence-MIT-lightgrey.svg?style=flat)](https://tldrlegal.com/license/mit-license) [![Build Status](https://travis-ci.org/ccamel/stomp-client.svg?branch=master)](https://travis-ci.org/ccamel/stomp-client) [![Coverage Status](https://coveralls.io/repos/github/ccamel/stomp-client/badge.svg?branch=master)](https://coveralls.io/github/ccamel/stomp-client?branch=master)
+[![MIT](https://img.shields.io/badge/licence-MIT-lightgrey.svg?style=flat)](https://tldrlegal.com/license/mit-license) [![Build Status](https://travis-ci.org/ccamel/stomp-client.svg?branch=master)](https://travis-ci.org/ccamel/stomp-client) [![Coverage Status](https://coveralls.io/repos/github/ccamel/stomp-client/badge.svg?branch=master)](https://coveralls.io/github/ccamel/stomp-client?branch=master) ![](https://img.shields.io/badge/status-work--in--progress-orange.svg)
 
 > [Scala] implementation of a [STOMP] 1.2 client library for both the backend and frontend.
 
